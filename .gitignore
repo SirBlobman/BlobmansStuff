@@ -1,0 +1,25 @@
+# Eclipse
+*.classpath
+*.externalToolBuilders
+*.launch
+*.xml
+.gradle
+.project
+.settings
+.class
+build
+bin
+eclipse
+run
+
+# Minecraft
+crash-reports
+config
+logs
+saves
+resourcepacks
+usercache.json
+usernamecache.json
+
+# Custom
+Idea Box.txt
