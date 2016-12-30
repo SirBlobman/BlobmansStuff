@@ -1,6 +1,6 @@
 package com.SirBlobman.stuff;
 
-import com.SirBlobman.stuff.items.SlimeArmor;
+import com.SirBlobman.stuff.item.SlimeArmor;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLiving;

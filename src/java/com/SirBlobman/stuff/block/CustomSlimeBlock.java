@@ -1,6 +1,6 @@
-package com.SirBlobman.stuff.blocks;
+package com.SirBlobman.stuff.block;
 
-import com.SirBlobman.stuff.creative.tabs.SlimyTabs;
+import com.SirBlobman.stuff.creative.SlimyTabs;
 
 import net.minecraft.block.BlockSlime;
 import net.minecraft.entity.Entity;

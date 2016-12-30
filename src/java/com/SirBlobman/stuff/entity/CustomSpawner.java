@@ -1,4 +1,4 @@
-package com.SirBlobman.stuff.entities;
+package com.SirBlobman.stuff.entity;
 
 import com.SirBlobman.stuff.Stuff;
 

@@ -1,4 +1,4 @@
-package com.SirBlobman.stuff.items;
+package com.SirBlobman.stuff.item;
 
 import com.SirBlobman.stuff.Stuff;
 

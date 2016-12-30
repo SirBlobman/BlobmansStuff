@@ -1,6 +1,6 @@
 package com.SirBlobman.stuff.render;
 
-import com.SirBlobman.stuff.blocks.BBlocks;
+import com.SirBlobman.stuff.block.BBlocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;

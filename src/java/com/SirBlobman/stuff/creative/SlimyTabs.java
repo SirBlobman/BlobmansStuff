@@ -1,7 +1,7 @@
-package com.SirBlobman.stuff.creative.tabs;
+package com.SirBlobman.stuff.creative;
 
-import com.SirBlobman.stuff.blocks.BBlocks;
-import com.SirBlobman.stuff.items.BItems;
+import com.SirBlobman.stuff.block.BBlocks;
+import com.SirBlobman.stuff.item.BItems;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

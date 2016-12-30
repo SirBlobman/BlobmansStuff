@@ -1,11 +1,12 @@
 package com.SirBlobman.stuff;
 
-import com.SirBlobman.stuff.blocks.BBlocks;
-import com.SirBlobman.stuff.entities.BEntities;
-import com.SirBlobman.stuff.entities.CustomSpawner;
-import com.SirBlobman.stuff.entities.ExplosionCanceller;
-import com.SirBlobman.stuff.items.BItems;
-import com.SirBlobman.stuff.recipes.BRecipes;
+import com.SirBlobman.stuff.block.BBlocks;
+import com.SirBlobman.stuff.entity.BEntities;
+import com.SirBlobman.stuff.entity.CustomSpawner;
+import com.SirBlobman.stuff.entity.ExplosionCanceller;
+import com.SirBlobman.stuff.item.BItems;
+import com.SirBlobman.stuff.recipe.BRecipes;
+import com.SirBlobman.stuff.world.BlobDimensions;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -17,6 +18,7 @@ public class Common
 		BItems.createItems();
 		BBlocks.createBlocks();
 		BEntities.createEntitites();
+		BlobDimensions.init();
 		
 		SUtil.regEvents(new ExplosionCanceller());
 		SUtil.regEvents(new CustomSpawner());

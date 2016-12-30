@@ -1,9 +1,9 @@
 package com.SirBlobman.stuff.render;
 
 import com.SirBlobman.stuff.Stuff;
-import com.SirBlobman.stuff.entities.BlueSlime;
-import com.SirBlobman.stuff.entities.CreeperSlime;
-import com.SirBlobman.stuff.entities.ProjectileSlimeball;
+import com.SirBlobman.stuff.entity.BlueSlime;
+import com.SirBlobman.stuff.entity.CreeperSlime;
+import com.SirBlobman.stuff.entity.ProjectileSlimeball;
 import com.SirBlobman.stuff.render.entity.RenderCustomCreeper;
 import com.SirBlobman.stuff.render.entity.RenderCustomSlime;
 import com.SirBlobman.stuff.render.entity.RenderSlimeball;

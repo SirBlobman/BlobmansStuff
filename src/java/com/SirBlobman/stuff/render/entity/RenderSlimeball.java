@@ -1,6 +1,6 @@
 package com.SirBlobman.stuff.render.entity;
 
-import com.SirBlobman.stuff.entities.ProjectileSlimeball;
+import com.SirBlobman.stuff.entity.ProjectileSlimeball;
 
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;

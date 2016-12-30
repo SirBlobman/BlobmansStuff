@@ -1,9 +1,9 @@
-package com.SirBlobman.stuff.items;
+package com.SirBlobman.stuff.item;
 
 import java.util.List;
 
-import com.SirBlobman.stuff.creative.tabs.SlimyTabs;
-import com.SirBlobman.stuff.entities.ProjectileSlimeball;
+import com.SirBlobman.stuff.creative.SlimyTabs;
+import com.SirBlobman.stuff.entity.ProjectileSlimeball;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

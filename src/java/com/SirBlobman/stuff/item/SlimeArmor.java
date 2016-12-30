@@ -1,7 +1,7 @@
-package com.SirBlobman.stuff.items;
+package com.SirBlobman.stuff.item;
 
 import com.SirBlobman.stuff.SUtil;
-import com.SirBlobman.stuff.creative.tabs.SlimyTabs;
+import com.SirBlobman.stuff.creative.SlimyTabs;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;

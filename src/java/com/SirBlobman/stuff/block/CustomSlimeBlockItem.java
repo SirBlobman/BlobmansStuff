@@ -1,4 +1,4 @@
-package com.SirBlobman.stuff.blocks;
+package com.SirBlobman.stuff.block;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemBlock;

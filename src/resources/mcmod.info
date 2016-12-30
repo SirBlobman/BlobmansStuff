@@ -2,7 +2,7 @@
 {
   "modid": "blobmansstuff",
   "name": "Blobman's Stuff",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "mcversion": "1.10.2",
   "description": "Adds random recipes and items, but it was originally based on slime stuff",
   "url": "http://blobcatraz.weebly.com",

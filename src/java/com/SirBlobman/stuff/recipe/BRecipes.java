@@ -1,7 +1,7 @@
-package com.SirBlobman.stuff.recipes;
+package com.SirBlobman.stuff.recipe;
 
-import com.SirBlobman.stuff.blocks.BBlocks;
-import com.SirBlobman.stuff.items.BItems;
+import com.SirBlobman.stuff.block.BBlocks;
+import com.SirBlobman.stuff.item.BItems;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

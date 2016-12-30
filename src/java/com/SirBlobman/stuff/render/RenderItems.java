@@ -1,6 +1,6 @@
 package com.SirBlobman.stuff.render;
 
-import com.SirBlobman.stuff.items.BItems;
+import com.SirBlobman.stuff.item.BItems;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;

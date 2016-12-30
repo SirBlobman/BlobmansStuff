@@ -1,7 +1,7 @@
-package com.SirBlobman.stuff.entities;
+package com.SirBlobman.stuff.entity;
 
-import com.SirBlobman.stuff.items.BItems;
-import com.SirBlobman.stuff.items.Slimeball;
+import com.SirBlobman.stuff.item.BItems;
+import com.SirBlobman.stuff.item.Slimeball;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;

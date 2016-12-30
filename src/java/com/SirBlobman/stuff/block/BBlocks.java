@@ -1,6 +1,6 @@
-package com.SirBlobman.stuff.blocks;
+package com.SirBlobman.stuff.block;
 
-import com.SirBlobman.stuff.items.BItems;
+import com.SirBlobman.stuff.item.BItems;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
