@@ -1,0 +1,35 @@
+language.name=English
+language.region=United States
+language.code=en_us
+
+prefix.stuff=Blobman's Stuff
+
+itemGroup.BItems=§9Blobman's Stuff (§aItems§9)§r
+itemGroup.BBlocks=§9Blobman's Stuff (§aBlocks§9)§r
+itemGroup.BTools=§9Blobman's Stuff (§aTools§9)§r
+itemGroup.BArmor=§9Blobman's Stuff (§aArmor§9)§r
+
+item.slime_wand.name=§aSlime §rWand
+item.shiny_sword.name=§b§ki§fShiny§b§ki§r Sword
+item.ultra_shiny_sword.name=§b§ki§fUltra Shiny§b§ki§r Sword
+
+armor.crown=%1s's Crown
+armor.chest=%1s's Chest
+armor.legs=%1s's Legs
+armor.feet=%1s's Feet
+armor.helmet=%1s Helmet
+armor.chestplate=%1s Chestplate
+armor.leggings=%1s Leggings
+armor.boots=%1s Boots
+
+color.color=Color: %1s
+color.blue=§1Blue§r
+color.red=§4Red§r
+color.yellow=§6Yellow§r
+color.shiny=§b§ki§fShiny§b§ki§r
+color.black=§0Black§r
+
+type.slime=§aSlime§r
+
+entity.blue_slime.name=Blue Slime
+entity.creeper_slime.name=Slimy Creeper
