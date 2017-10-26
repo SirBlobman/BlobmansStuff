@@ -10,6 +10,7 @@ itemGroup.BTools=§9Cosas de Blobman (§aHerramientas§9)§r
 itemGroup.BArmor=§9Cosas de Blobman (§aArmadura§9)§r
 
 item.slime_wand.name=Varita de §aslime§r
+item.wand_stick.name=Varita
 item.shiny_sword.name=Espada §b§ki§fbrillante§b§ki§r
 item.ultra_shiny_sword.name=Espada §b§ki§fultra brillante§b§ki§r
 

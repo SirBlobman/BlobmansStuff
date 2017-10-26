@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "slime",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "blobman:yellow_slimeball"
+    }
+  },
+  "result": {
+    "item": "blobman:yellow_slime"
+  }
+}

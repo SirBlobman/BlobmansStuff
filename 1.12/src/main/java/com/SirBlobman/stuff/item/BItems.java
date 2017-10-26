@@ -4,6 +4,7 @@ import static com.SirBlobman.stuff.Stuff.MODID;
 import static net.minecraft.inventory.EntityEquipmentSlot.*;
 
 import com.SirBlobman.stuff.utility.Util;
+import com.SirBlobman.stuff.creative.SlimyTabs;
 
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -13,7 +14,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public final class BItems {
-	public static final ArmorMaterial SIRBLOBMAN = EnumHelper.addArmorMaterial("SirBlobman", MODID + ":SirBlobman", 100, new int[] {20, 0, 0, 0}, 30, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 2);
+	public static final ArmorMaterial SIRBLOBMAN = EnumHelper.addArmorMaterial("SirBlobman", MODID + ":SirBlobman", 100, new int[] {0, 0, 0, 20}, 30, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 2);
 	public static final ArmorMaterial BLUE_SLIME = EnumHelper.addArmorMaterial("BlueSlime", MODID + ":blue_slime", 100, new int[] {5, 5, 5, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 2);
 	
 	public static final ToolMaterial ULTRA_SHINY = EnumHelper.addToolMaterial("UltraShiny", 50, Integer.MAX_VALUE, Float.MAX_VALUE, Float.POSITIVE_INFINITY, Integer.MAX_VALUE);
@@ -40,6 +41,8 @@ public final class BItems {
 	
 	public static final SlimeWand SLIME_WAND_GREEN = new SlimeWand(1);
 	public static final SlimeWand SLIME_WAND_BLUE = new SlimeWand(2);
+	public static final Item WAND_STICK = new Item().setRegistryName("wand_stick").setUnlocalizedName("wand_stick").setCreativeTab(SlimyTabs.ITEMS);
+	
 	public static void items(IForgeRegistry<Item> ifr) {
 		Util.print("Registering Items...");
 		ifr.registerAll(
@@ -55,7 +58,7 @@ public final class BItems {
 			BLUE_SLIME_HELMET, BLUE_SLIME_CHESTPLATE,
 			BLUE_SLIME_LEGGINGS, BLUE_SLIME_BOOTS,
 			
-			SLIME_WAND_GREEN, SLIME_WAND_BLUE
+			SLIME_WAND_GREEN, SLIME_WAND_BLUE, WAND_STICK
 		);
 	}
 }

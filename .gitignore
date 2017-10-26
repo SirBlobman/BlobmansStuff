@@ -10,9 +10,10 @@
 build
 bin
 eclipse
-run
 
 # Minecraft
+run
+server
 crash-reports
 config
 logs

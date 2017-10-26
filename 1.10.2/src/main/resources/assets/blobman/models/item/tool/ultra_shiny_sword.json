@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "blobman:items/ultra_shiny_sword"
+    }
+}

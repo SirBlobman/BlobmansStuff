@@ -1,0 +1,7 @@
+{
+    "parent": "block/slime",
+    "textures": {
+        "particle": "blobman:blocks/red_slime",
+        "texture": "blobman:blocks/red_slime"
+    }
+}

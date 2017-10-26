@@ -4,13 +4,8 @@ import com.SirBlobman.stuff.creative.SlimyTabs;
 import com.SirBlobman.stuff.entity.ProjectileBlueSlimeball;
 import com.SirBlobman.stuff.entity.ProjectileGreenSlimeball;
 import com.SirBlobman.stuff.entity.ProjectileSlimeball;
-import com.SirBlobman.stuff.utility.Util;
 
-import java.util.List;
-
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -28,19 +23,6 @@ public class SlimeWand extends Item {
 		setRegistryName(name + level);
 		setCreativeTab(SlimyTabs.TOOLS);
 		setMaxStackSize(1);
-	}
-	
-	@Override
-	public void addInformation(ItemStack is, World w, List<String> list, ITooltipFlag flag) {
-		int lvl = getLevel();
-		boolean b = (level == 1);
-		Item i = b ? Items.SLIME_BALL : BItems.SLIMEBALL_BLUE;
-		ItemStack in = new ItemStack(i);
-		String disp = in.getDisplayName();
-		
-		String l1 = Util.color("&fLevel: &e" + lvl);
-		String l2 = Util.color("&fAmmo: &f" + disp);
-		list.add(l1); list.add(l2);
 	}
 	
 	@Override

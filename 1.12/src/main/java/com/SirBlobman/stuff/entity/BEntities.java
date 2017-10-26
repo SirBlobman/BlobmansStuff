@@ -7,7 +7,10 @@ import com.SirBlobman.stuff.utility.Util;
 import java.awt.Color;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
@@ -20,8 +23,8 @@ public final class BEntities {
 	
 	public static void entities() {
 		Util.print("Registering Entities...");
-		reg(BlueSlime.class, "blue_slime", BLUE, LIGHT_BLUE, Config.ID_BLUE_SLIME);
-		reg(CreeperSlime.class, "creeper_slime", GREEN, LIGHT_BLUE, Config.ID_CREEPER_SLIME);
+		regLiving(BlueSlime.class, "blue_slime", BLUE, LIGHT_BLUE, Config.ID_BLUE_SLIME, EnumCreatureType.MONSTER, Util.getBiomes("plains"));
+		regLiving(CreeperSlime.class, "creeper_slime", GREEN, LIGHT_BLUE, Config.ID_CREEPER_SLIME, EnumCreatureType.MONSTER, Util.getBiomes("forest"));
 		regNoEgg(ProjectileBlueSlimeball.class, "blue_slimeball", Config.ID_BLUE_SLIME_BALL);
 		regNoEgg(ProjectileGreenSlimeball.class, "blue_slimeball", Config.ID_GREEN_SLIME_BALL);
 	}
@@ -32,6 +35,11 @@ public final class BEntities {
 		int range = 64;
 		int freq = 5;
 		EntityRegistry.registerModEntity(rl, clazz, name, id, stuff, range, freq, true, c1, c2);
+	}
+	
+	private static void regLiving(Class<? extends EntityLiving> clazz, String name, int c1, int c2, int id, EnumCreatureType type, Biome... bs) {
+		reg(clazz, name, c1, c2, id);
+		EntityRegistry.addSpawn(clazz, 20, 1, 2, type, bs);
 	}
 	
 	private static void regNoEgg(Class<? extends Entity> clazz, String name, int id) {

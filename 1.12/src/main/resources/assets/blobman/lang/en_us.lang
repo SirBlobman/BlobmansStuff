@@ -10,6 +10,7 @@ itemGroup.BTools=§9Blobman's Stuff (§aTools§9)§r
 itemGroup.BArmor=§9Blobman's Stuff (§aArmor§9)§r
 
 item.slime_wand.name=§aSlime §rWand
+item.wand_stick.name=Wand Stick
 item.shiny_sword.name=§b§ki§fShiny§b§ki§r Sword
 item.ultra_shiny_sword.name=§b§ki§fUltra Shiny§b§ki§r Sword
 

@@ -1,5 +1,7 @@
 package com.SirBlobman.stuff.entity;
 
+import com.SirBlobman.stuff.entity.ai.EntityAICustomCreeperSwell;
+
 import java.util.Collection;
 
 import javax.annotation.Nullable;
@@ -66,7 +68,7 @@ public abstract class CustomCreeper extends EntityMob {
 	}
 	
 	public int getMaxFallHeight() {return 0;}
-	public void fall(float distance, float damageMultiplier) {}
+	public void fall(float f, float g) {}
 
 	protected void entityInit() {
 		super.entityInit();
