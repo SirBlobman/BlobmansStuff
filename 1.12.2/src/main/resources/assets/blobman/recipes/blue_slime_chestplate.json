@@ -1,16 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "slime_block",
   "pattern": [
-    "BBB",
-    "BBB",
-    "BBB"
+  	"B B",
+  	"BBB",
+  	"BBB"
   ],
   "key": {
     "B": {"item": "blobman:blue_slime_ball"}
   },
   "result": {
-    "item": "blobman:blue_slime_block",
+    "item": "blobman:blue_slime_chestplate",
     "count": 1
   }
 }

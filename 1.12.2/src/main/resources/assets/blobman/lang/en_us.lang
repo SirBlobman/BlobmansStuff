@@ -26,7 +26,7 @@ item.blue_slime_boots.name=Blue Slime Boots
 <Tools>
 item.slime_wand.name=Slime Wand
 item.shiny_sword.name=Shiny Sword
-item.ultra_shiny_sword=Ultra Shiny Sword
+item.ultra_shiny_sword.name=Ultra Shiny Sword
 
 <Other Items>
 item.wand_stick.name=Wand Stick
