@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting:shaped",
+  "group": "slime_block",
+  "pattern": [
+    "SSS",
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "S": {"item": "blobman:shiny_slime_ball"}
+  },
+  "result": {
+    "item": "blobman:shiny_slime_block",
+    "count": 1
+  }
+}

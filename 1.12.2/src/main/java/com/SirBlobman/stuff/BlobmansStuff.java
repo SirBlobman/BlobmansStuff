@@ -43,6 +43,7 @@ public class BlobmansStuff {
     @EventHandler
     public void pre(FMLPreInitializationEvent e) {
         FOLDER = e.getModConfigurationDirectory();
+        BSConfig.load();
         Util.regEvents(this);
         proxy.pre(e);
     }

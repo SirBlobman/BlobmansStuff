@@ -14,7 +14,7 @@ public final class BSConfig {
     public static float BLUE_SLIME_JOCKEY_CHANCE;
     public static void load() {
         config.load();
-        BLUE_SLIME_AMOUNT           = config.getInt("blue slime amount", "entity.creeper slime.explosion", 5, 1, 20, "How many blue slimes will the creeper slime spawn when it explodes? Will be doubles if the creeper slime is powered.");
+        BLUE_SLIME_AMOUNT           = config.getInt("blue slime amount", "entity.creeper slime.explosion", 5, 1, 20, "How many blue slimes will the creeper slime spawn when it explodes? Will be doubled if the creeper slime is powered.");
         BLUE_SLIME_SIZE             = config.getInt("blue slime size", "entity.creeper slime.explosion", 1, 1, 10, "What size will the blue slimes be?");
         BLUE_SLIME_JOCKEY_CHANCE    = config.getFloat("jockey chance", "entity.blue slime", 10.0F, 1.0F, 100.0F, "What is the chance (out of 100) that a blue slime jocket will spawn? (blue slime riding a spider)");
         config.save();

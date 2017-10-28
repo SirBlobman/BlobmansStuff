@@ -5,5 +5,5 @@
   "version": "${version}",
   "mcversion": "${mcversion}",
   "authorList": ["SirBlobman"],
-  "logoFile": "assets/blobman/logo/logo.png"
+  "logoFile": "assets/blobman/logo.png"
 }]

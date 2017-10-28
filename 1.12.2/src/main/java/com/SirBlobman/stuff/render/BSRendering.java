@@ -17,9 +17,7 @@ import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -29,6 +27,9 @@ public final class BSRendering {
     public static void items() {
         reg(BSItems.SLIMEBALL_BLUE, BSItems.SLIMEBALL_YELLOW, BSItems.SLIMEBALL_RED, BSItems.SLIMEBALL_SHINY, BSItems.SLIMEBALL_BLACK);
         reg(BSItems.WAND_STICK);
+        reg(BSItems.SIRBLOBMAN_CROWN, BSItems.SIRBLOBMAN_SUIT, BSItems.SIRBLOBMAN_PANTS, BSItems.SIRBLOBMAN_SHOES);
+        reg(BSItems.BLUE_SLIME_HELMET, BSItems.BLUE_SLIME_CHESTPLATE, BSItems.BLUE_SLIME_LEGGINGS, BSItems.BLUE_SLIME_BOOTS);
+        reg(BSItems.SHINY_SWORD, BSItems.ULTRA_SWORD);
         
         reg(BSItems.SLIME_WAND, 0, "tool/green_slime_wand");
         reg(BSItems.SLIME_WAND, 1, "tool/blue_slime_wand");
@@ -66,12 +67,16 @@ public final class BSRendering {
             ResourceLocation rl = i.getRegistryName();
             String path = rl.getResourcePath();
             
-            if(i instanceof ItemBlock) path = "block/" + path;
-            else if(i instanceof ItemCustomSlimeball) {
+            if(i instanceof ItemCustomSlimeball) {
                 ItemCustomSlimeball ics = (ItemCustomSlimeball) i;
                 String color = ics.getColor();
                 path = "slime_ball/" + color;
-            } else if (i instanceof ItemArmor) path = "armor/" + path;
+            } 
+            
+            else if(i instanceof ItemBlock) path = "block/" + path;
+            else if(i instanceof ItemArmor) path = "armor/" + path;
+            else if(i instanceof ItemTool || i instanceof ItemSword) path = "tool/" + path;
+            
             reg(i, 0, path);
         }
     }

@@ -1,10 +1,14 @@
 package com.SirBlobman.stuff.utility;
 
+import com.SirBlobman.stuff.item.custom.ItemSlimeArmor;
+
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -72,5 +76,29 @@ public class ItemUtil extends Util {
         Enchantment ench = Enchantment.getEnchantmentByLocation(enchantID);
         if(ench != null) is.addEnchantment(ench, level);
         return is;
+    }
+    
+    public static boolean isWearingFullArmor(EntityLivingBase elb, ItemStack head, ItemStack chest, ItemStack legs, ItemStack feet) {
+        ItemStack helmet        = elb.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+        ItemStack chestplate    = elb.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+        ItemStack leggings      = elb.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
+        ItemStack boots         = elb.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+        
+        boolean h = helmet.equals(head), c = chestplate.equals(chest), l = leggings.equals(legs), b = boots.equals(feet);
+        boolean armor = (h && c && l && b);
+        return armor;
+    }
+    
+    public static boolean isWearingFullSlimeArmor(EntityLivingBase elb) {
+        ItemStack helmet        = elb.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+        ItemStack chestplate    = elb.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+        ItemStack leggings      = elb.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
+        ItemStack boots         = elb.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+        
+        Item head = helmet.getItem(), chest = chestplate.getItem(), legs = leggings.getItem(), feet = boots.getItem();
+        boolean h = (head instanceof ItemSlimeArmor), c = (chest instanceof ItemSlimeArmor), l = (legs instanceof ItemSlimeArmor), b = (feet instanceof ItemSlimeArmor);
+        boolean armor = (h && c && l && b);
+        return armor;
+        
     }
 }

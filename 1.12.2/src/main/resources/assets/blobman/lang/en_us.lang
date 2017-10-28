@@ -13,8 +13,22 @@ item.yellow_slime_ball.name=Yellow Slimeball
 item.shiny_slime_ball.name=Shiny Slimeball
 item.black_slime_ball.name=Black Slimeball
 
-<Other Items>
+<Armor>
+item.sirblobman_crown.name=SirBlobman's Crown
+item.sirblobman_suit.name=SirBlobman's Suit
+item.sirblobman_pants.name=SirBlobman's Pants
+item.sirblobman_shoes.name=SirBlobman's Shoes
+item.blue_slime_helmet.name=Blue Slime Helmet
+item.blue_slime_chestplate.name=Blue Slime Chestplate
+item.blue_slime_leggings.name=Blue Slime Leggings
+item.blue_slime_boots.name=Blue Slime Boots
+
+<Tools>
 item.slime_wand.name=Slime Wand
+item.shiny_sword.name=Shiny Sword
+item.ultra_shiny_sword=Ultra Shiny Sword
+
+<Other Items>
 item.wand_stick.name=Wand Stick
 
 <Blocks>
