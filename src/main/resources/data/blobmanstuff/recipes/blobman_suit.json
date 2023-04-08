@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "blobman_armor",
+  "pattern": [
+    "WBW",
+    "WWW",
+    "WWW"
+  ],
+  "key": {
+    "B": {
+      "item": "blobmanstuff:blue_slime_ball"
+    },
+    "W": {
+      "item": "minecraft:gray_wool"
+    }
+  },
+  "result": {
+    "item": "blobmanstuff:blobman_suit",
+    "count": 1
+  }
+}

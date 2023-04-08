@@ -4,6 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.Rarity;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -19,7 +20,8 @@ public final class ItemSlimeWand extends Item {
     private final int level;
 
     public ItemSlimeWand(int level) {
-        super(new Properties().stacksTo(1).tab(BSItemGroups.MAIN));
+        super(new Properties().stacksTo(1).tab(BSItemGroups.MAIN)
+                .rarity(level == 0 ? Rarity.UNCOMMON : Rarity.RARE));
         this.level = level;
     }
 
@@ -50,7 +52,7 @@ public final class ItemSlimeWand extends Item {
 
         int level = getLevel();
         Item thrown = (level == 0 ? Items.SLIME_BALL : BSItems.BLUE_SLIME_BALL);
-        float damage = (2.0F + level);
+        float damage = (2.0F * (level + 1.0F));
 
         EntityCustomItemProjectile projectile = new EntityCustomItemProjectile(damage, world, player);
         projectile.shootFromRotation(player, player.xRot, player.yRot,

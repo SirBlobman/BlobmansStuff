@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "blobman_armor",
+  "pattern": [
+    "GGG",
+    "GBG"
+  ],
+  "key": {
+    "B": {
+      "item": "blobmanstuff:blue_slime_ball"
+    },
+    "G": {
+      "tag": "forge:ingots/gold"
+    }
+  },
+  "result": {
+    "item": "blobmanstuff:blobman_crown",
+    "count": 1
+  }
+}

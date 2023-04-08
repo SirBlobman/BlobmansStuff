@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "blobman_armor",
+  "pattern": [
+    "B B",
+    "D D",
+    "L L"
+  ],
+  "key": {
+    "B": {
+      "item": "blobmanstuff:blue_slime_ball"
+    },
+    "D": {
+      "item": "minecraft:black_dye"
+    },
+    "L": {
+      "item": "minecraft:leather_boots"
+    }
+  },
+  "result": {
+    "item": "blobmanstuff:blobman_shoes",
+    "count": 1
+  }
+}

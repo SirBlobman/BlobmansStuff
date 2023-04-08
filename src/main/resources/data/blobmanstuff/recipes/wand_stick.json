@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "group": "slime_wands",
   "ingredients": [
     {"item": "minecraft:stick"},
     {"item": "minecraft:stick"},

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "slime_ball",
+  "pattern": [
+    "SSS",
+    "SNS",
+    "SSS"
+  ],
+  "key": {
+    "N": {
+      "tag": "forge:nether_stars"
+    },
+    "S": {
+      "item": "blobmanstuff:yellow_slime_ball"
+    }
+  },
+  "result": {
+    "item": "blobmanstuff:shiny_slime_ball",
+    "count": 1
+  }
+}
