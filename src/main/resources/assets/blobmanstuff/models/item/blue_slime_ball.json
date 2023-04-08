@@ -1,0 +1,6 @@
+{
+  "parent": "builtin/generated",
+  "textures": {
+    "layer0": "blobmanstuff:item/blue_slime_ball"
+  }
+}

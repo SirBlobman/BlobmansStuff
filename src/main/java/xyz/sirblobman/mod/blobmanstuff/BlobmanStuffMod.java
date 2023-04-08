@@ -12,7 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod(BlobmanStuffMod.MOD_ID)
-public class BlobmanStuffMod {
+public final class BlobmanStuffMod {
     public static final String MOD_ID = "blobmanstuff";
     private static final Logger LOGGER;
 

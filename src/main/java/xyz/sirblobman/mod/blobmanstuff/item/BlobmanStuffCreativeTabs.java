@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 
 import org.jetbrains.annotations.NotNull;
 
-public class BlobmanStuffCreativeTabs {
+public final class BlobmanStuffCreativeTabs {
     public static ItemGroup MAIN_TAB = new ItemGroup("blobmanstuff.main") {
         @Override
         public @NotNull ItemStack makeIcon() {
