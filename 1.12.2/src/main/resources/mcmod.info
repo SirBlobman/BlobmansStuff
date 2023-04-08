@@ -1,9 +1,0 @@
-[{
-  "modid": "blobman",
-  "name": "Blobman's Stuff",
-  "description": "Adds random stuff created by SirBlobman",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "authorList": ["SirBlobman"],
-  "logoFile": "assets/blobman/logo.png"
-}]
