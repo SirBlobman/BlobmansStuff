@@ -1,12 +1,15 @@
 package xyz.sirblobman.mod.blobmanstuff;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 
 import xyz.sirblobman.mod.blobmanstuff.block.BSBlocks;
+import xyz.sirblobman.mod.blobmanstuff.entity.BSEntityTypes;
 import xyz.sirblobman.mod.blobmanstuff.item.BSItems;
 
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -36,5 +39,17 @@ public final class BlobmanStuffRegistry {
         IForgeRegistry<Item> registry = e.getRegistry();
         BSItems.register(registry);
         BSBlocks.registerItems(registry);
+        BSEntityTypes.registerSpawnEggs(registry);
+    }
+
+    @SubscribeEvent
+    public void onRegisterEntityTypes(Register<EntityType<?>> e) {
+        IForgeRegistry<EntityType<?>> registry = e.getRegistry();
+        BSEntityTypes.registerTypes(registry);
+    }
+
+    @SubscribeEvent
+    public void onRegisterEntityAttributes(EntityAttributeCreationEvent e) {
+        BSEntityTypes.registerAttributes(e);
     }
 }

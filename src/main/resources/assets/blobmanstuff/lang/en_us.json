@@ -1,0 +1,31 @@
+{
+  "itemGroup.blobmanstuff.main": "Blobman's Stuff Mod",
+
+  "item.blobmanstuff.black_slime_ball": "Black Slimeball",
+  "item.blobmanstuff.blue_slime_ball": "Blue Slimeball",
+  "item.blobmanstuff.red_slime_ball": "Red Slimeball",
+  "item.blobmanstuff.shiny_slime_ball": "Shiny Slimeball",
+  "item.blobmanstuff.yellow_slime_ball": "Yellow Slimeball",
+  "item.blobmanstuff.shiny_sword": "Shiny Sword",
+  "item.blobmanstuff.ultra_sword": "Ultra Sword",
+  "item.blobmanstuff.blobman_crown": "SirBlobman's Crown",
+  "item.blobmanstuff.blobman_suit": "SirBlobman's Business Suit",
+  "item.blobmanstuff.blobman_pants": "SirBlobman's Business Pants",
+  "item.blobmanstuff.blobman_shoes": "SirBlobman's Shoes",
+  "item.blobmanstuff.blue_slime_helmet": "Blue Slime Helmet",
+  "item.blobmanstuff.blue_slime_chestplate": "Blue Slime Chestplate",
+  "item.blobmanstuff.blue_slime_leggings": "Blue Slime Leggings",
+  "item.blobmanstuff.blue_slime_boots": "Blue Slime Boots",
+  "item.blobmanstuff.wand_stick": "Wand Stick",
+  "item.blobmanstuff.slime_wand": "Slime Wand",
+  "item.blobmanstuff.blue_slime_wand": "Blue Slime Wand",
+  "item.blobmanstuff.blue_slime_spawn_egg": "Blue Slime Spawn Egg",
+
+  "block.blobmanstuff.black_slime_block": "Black Slime Block",
+  "block.blobmanstuff.blue_slime_block": "Blue Slime Block",
+  "block.blobmanstuff.red_slime_block": "Red Slime Block",
+  "block.blobmanstuff.shiny_slime_block": "Shiny Slime Block",
+  "block.blobmanstuff.yellow_slime_block": "Yellow Slime Block",
+
+  "entity.blobmanstuff.blue_slime": "Blue Slime"
+}

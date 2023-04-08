@@ -6,12 +6,13 @@ import net.minecraft.item.ItemStack;
 import xyz.sirblobman.mod.blobmanstuff.type.SlimeballColor;
 
 import org.apache.commons.lang3.Validate;
+import org.jetbrains.annotations.NotNull;
 
-public final class ItemSlimeball extends Item {
+public final class ItemColoredSlimeball extends Item {
     private final SlimeballColor color;
 
-    public ItemSlimeball(SlimeballColor color) {
-        super(new Properties().tab(BlobmanStuffCreativeTabs.MAIN_TAB));
+    public ItemColoredSlimeball(SlimeballColor color) {
+        super(new Properties().tab(BSItemGroups.MAIN).rarity(color.getRarity()));
         this.color = Validate.notNull(color, "color must not be null!");
     }
 
@@ -20,10 +21,10 @@ public final class ItemSlimeball extends Item {
     }
 
     @Override
-    public boolean isFoil(ItemStack stack) {
+    public boolean isFoil(@NotNull ItemStack stack) {
         Item item = stack.getItem();
-        if (item instanceof ItemSlimeball) {
-            ItemSlimeball itemSlimeball = (ItemSlimeball) item;
+        if (item instanceof ItemColoredSlimeball) {
+            ItemColoredSlimeball itemSlimeball = (ItemColoredSlimeball) item;
             SlimeballColor color = itemSlimeball.getColor();
             return color.isShiny();
         }

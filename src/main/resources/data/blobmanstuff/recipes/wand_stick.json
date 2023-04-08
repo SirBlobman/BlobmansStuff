@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "minecraft:stick"},
+    {"item": "minecraft:stick"},
+    {"item": "minecraft:nether_star"}
+  ],
+  "result": {
+    "item": "blobmanstuff:wand_stick",
+    "count": 2
+  }
+}
