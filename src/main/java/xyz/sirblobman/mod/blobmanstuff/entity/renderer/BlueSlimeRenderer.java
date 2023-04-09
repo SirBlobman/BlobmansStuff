@@ -7,11 +7,15 @@ import net.minecraft.util.ResourceLocation;
 
 import xyz.sirblobman.mod.blobmanstuff.BlobmanStuffMod;
 
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
+@OnlyIn(Dist.CLIENT)
 public final class BlueSlimeRenderer extends SlimeRenderer {
     private static final ResourceLocation BLUE_SLIME = new ResourceLocation(BlobmanStuffMod.MOD_ID,
             "textures/entity/blue_slime.png");
+
     public BlueSlimeRenderer(EntityRendererManager manager) {
         super(manager);
     }

@@ -46,6 +46,7 @@ public final class BlobmanStuffRegistry {
     public void onRegisterEntityTypes(Register<EntityType<?>> e) {
         IForgeRegistry<EntityType<?>> registry = e.getRegistry();
         BSEntityTypes.registerTypes(registry);
+        BSEntityTypes.registerSpawns();
     }
 
     @SubscribeEvent

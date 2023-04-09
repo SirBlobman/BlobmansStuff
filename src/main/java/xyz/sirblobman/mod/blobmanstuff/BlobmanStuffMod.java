@@ -4,17 +4,15 @@ import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.entity.SpriteRenderer;
 
 import xyz.sirblobman.mod.blobmanstuff.block.BSBlocks;
 import xyz.sirblobman.mod.blobmanstuff.entity.BSEntityTypes;
 
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -51,11 +49,12 @@ public final class BlobmanStuffMod {
         logger.info("Blobman's Stuff Common Setup");
     }
 
+    @OnlyIn(Dist.CLIENT)
     private void clientSetup(FMLClientSetupEvent e) {
         Logger logger = getLogger();
         logger.info("Blobman's Stuff Client Setup");
 
-        BSBlocks.registerRendering();
+        e.enqueueWork(BSBlocks::registerRendering);
 
         Supplier<Minecraft> minecraftSupplier = e.getMinecraftSupplier();
         Minecraft minecraft = minecraftSupplier.get();

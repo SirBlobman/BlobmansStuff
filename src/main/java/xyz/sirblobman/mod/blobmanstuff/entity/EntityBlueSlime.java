@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.loot.LootTables;
+import net.minecraft.network.IPacket;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ResourceLocation;
@@ -20,6 +21,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biomes;
 
+import net.minecraftforge.fml.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 public final class EntityBlueSlime extends SlimeEntity {
@@ -51,6 +53,11 @@ public final class EntityBlueSlime extends SlimeEntity {
     public EntityBlueSlime(EntityType<? extends SlimeEntity> type, World world) {
         super(type, world);
         getJumpPower();
+    }
+
+    @Override
+    public @NotNull IPacket<?> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
