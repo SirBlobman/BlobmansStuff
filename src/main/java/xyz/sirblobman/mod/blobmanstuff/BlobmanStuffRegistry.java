@@ -14,28 +14,17 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.IForgeRegistry;
-import org.apache.commons.lang3.Validate;
 
-@EventBusSubscriber(modid=BlobmanStuffMod.MOD_ID, bus=Bus.MOD)
+@EventBusSubscriber(modid = BlobmanStuffMod.MOD_ID, bus = Bus.MOD)
 public final class BlobmanStuffRegistry {
-    private final BlobmanStuffMod mod;
-
-    public BlobmanStuffRegistry(BlobmanStuffMod mod) {
-        this.mod = Validate.notNull(mod, "mod must not be null!");
-    }
-
-    private BlobmanStuffMod getMod() {
-        return this.mod;
-    }
-
     @SubscribeEvent
-    public void onRegisterBlocks(Register<Block> e) {
+    public static void onRegisterBlocks(Register<Block> e) {
         IForgeRegistry<Block> registry = e.getRegistry();
         BSBlocks.registerBlocks(registry);
     }
 
     @SubscribeEvent
-    public void onRegisterItems(Register<Item> e) {
+    public static void onRegisterItems(Register<Item> e) {
         IForgeRegistry<Item> registry = e.getRegistry();
         BSItems.register(registry);
         BSBlocks.registerItems(registry);
@@ -43,14 +32,14 @@ public final class BlobmanStuffRegistry {
     }
 
     @SubscribeEvent
-    public void onRegisterEntityTypes(Register<EntityType<?>> e) {
+    public static void onRegisterEntityTypes(Register<EntityType<?>> e) {
         IForgeRegistry<EntityType<?>> registry = e.getRegistry();
         BSEntityTypes.registerTypes(registry);
         BSEntityTypes.registerSpawns();
     }
 
     @SubscribeEvent
-    public void onRegisterEntityAttributes(EntityAttributeCreationEvent e) {
+    public static void onRegisterEntityAttributes(EntityAttributeCreationEvent e) {
         BSEntityTypes.registerAttributes(e);
     }
 }

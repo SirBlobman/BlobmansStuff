@@ -11,7 +11,7 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle'
 
-version = '3.0.0'
+version = '3.0.1'
 group = 'xyz.sirblobman.mod.blobmanstuff' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'blobmanstuff'
 
@@ -103,6 +103,10 @@ jar {
             "Implementation-Vendor" : "Sirblobman",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
+    }
+
+    filesMatching("META-INF/mods.toml") {
+        expand([modVersion: project.version])
     }
 }
 
