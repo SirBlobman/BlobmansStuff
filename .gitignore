@@ -94,3 +94,4 @@ nb-configuration.xml
 ## Minecraft Forge
 ##############################
 run/
+src/generated/
