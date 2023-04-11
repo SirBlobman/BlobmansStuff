@@ -1,4 +1,0 @@
-{
-  "parent": "minecraft:block/slime_block",
-  "render_type": "translucent"
-}
