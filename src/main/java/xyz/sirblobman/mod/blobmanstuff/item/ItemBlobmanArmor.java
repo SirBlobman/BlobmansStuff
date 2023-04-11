@@ -1,15 +1,14 @@
 package xyz.sirblobman.mod.blobmanstuff.item;
 
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.IArmorMaterial;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 
 import xyz.sirblobman.mod.blobmanstuff.item.material.BlobmanArmorMaterial;
 
 public final class ItemBlobmanArmor extends ArmorItem {
-    private static final IArmorMaterial BLOBMAN = new BlobmanArmorMaterial();
+    private static final ArmorMaterial BLOBMAN = new BlobmanArmorMaterial();
 
-    public ItemBlobmanArmor(EquipmentSlotType slot) {
-        super(BLOBMAN, slot, new Properties().tab(BSItemGroups.MAIN));
+    public ItemBlobmanArmor(Type slot) {
+        super(BLOBMAN, slot, new Properties());
     }
 }

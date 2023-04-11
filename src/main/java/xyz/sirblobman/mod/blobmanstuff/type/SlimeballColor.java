@@ -1,6 +1,6 @@
 package xyz.sirblobman.mod.blobmanstuff.type;
 
-import net.minecraft.item.Rarity;
+import net.minecraft.world.item.Rarity;
 
 import org.apache.commons.lang3.Validate;
 

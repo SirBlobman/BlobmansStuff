@@ -1,11 +1,11 @@
 package xyz.sirblobman.mod.blobmanstuff;
 
-import net.minecraftforge.common.MinecraftForge;
+import xyz.sirblobman.mod.blobmanstuff.block.BSBlocks;
+import xyz.sirblobman.mod.blobmanstuff.entity.BSEntityTypes;
+import xyz.sirblobman.mod.blobmanstuff.item.BSItems;
+
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,18 +26,10 @@ public final class BlobmanStuffMod {
     public BlobmanStuffMod() {
         FMLJavaModLoadingContext modLoadingContext = FMLJavaModLoadingContext.get();
         IEventBus modEventBus = modLoadingContext.getModEventBus();
-        modEventBus.addListener(this::commonSetup);
-        MinecraftForge.EVENT_BUS.register(this);
-    }
 
-    private void commonSetup(FMLCommonSetupEvent e) {
-        Logger logger = getLogger();
-        logger.info("Blobman's Stuff Common Setup");
-    }
-
-    @SubscribeEvent
-    public void serverSetup(FMLServerStartingEvent e) {
-        Logger logger = getLogger();
-        logger.info("Blobman's Stuff Server Setup");
+        BSBlocks.registerBlocks(modEventBus);
+        BSItems.registerItems(modEventBus);
+        BSEntityTypes.registerSpawnEggs();
+        BSEntityTypes.registerTypes(modEventBus);
     }
 }

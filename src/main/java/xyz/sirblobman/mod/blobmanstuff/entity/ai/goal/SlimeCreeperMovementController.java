@@ -1,20 +1,20 @@
 package xyz.sirblobman.mod.blobmanstuff.entity.ai.goal;
 
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.MovementController;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
 
-import xyz.sirblobman.mod.blobmanstuff.entity.EntityCreeperSlime;
+import xyz.sirblobman.mod.blobmanstuff.entity.CreeperSlime;
 
-public final class SlimeCreeperMovementController extends MovementController {
+public final class SlimeCreeperMovementController extends MoveControl {
     private float yRot;
     private int jumpDelay;
-    private final EntityCreeperSlime slime;
+    private final CreeperSlime slime;
     private boolean isAggressive;
 
-    public SlimeCreeperMovementController(EntityCreeperSlime p_i45821_1_) {
+    public SlimeCreeperMovementController(CreeperSlime p_i45821_1_) {
         super(p_i45821_1_);
         this.slime = p_i45821_1_;
-        this.yRot = 180.0F * p_i45821_1_.yRot / (float) Math.PI;
+        this.yRot = 180.0F * p_i45821_1_.getYRot() / (float) Math.PI;
     }
 
     public void setDirection(float p_179920_1_, boolean p_179920_2_) {
@@ -24,17 +24,17 @@ public final class SlimeCreeperMovementController extends MovementController {
 
     public void setWantedMovement(double p_179921_1_) {
         this.speedModifier = p_179921_1_;
-        this.operation = MovementController.Action.MOVE_TO;
+        this.operation = MoveControl.Operation.MOVE_TO;
     }
 
     public void tick() {
-        this.mob.yRot = this.rotlerp(this.mob.yRot, this.yRot, 90.0F);
-        this.mob.yHeadRot = this.mob.yRot;
-        this.mob.yBodyRot = this.mob.yRot;
-        if (this.operation != MovementController.Action.MOVE_TO) {
+        this.mob.setYRot(this.rotlerp(this.mob.getYRot(), this.yRot, 90.0F));
+        this.mob.yHeadRot = this.mob.getYRot();
+        this.mob.yBodyRot = this.mob.getYRot();
+        if (this.operation != MoveControl.Operation.MOVE_TO) {
             this.mob.setZza(0.0F);
         } else {
-            this.operation = MovementController.Action.WAIT;
+            this.operation = MoveControl.Operation.WAIT;
             if (this.mob.isOnGround()) {
                 this.mob.setSpeed((float) (this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
                 if (this.jumpDelay-- <= 0) {

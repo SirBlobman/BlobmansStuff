@@ -1,12 +1,13 @@
 package xyz.sirblobman.mod.blobmanstuff.item.material;
 
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import xyz.sirblobman.mod.blobmanstuff.item.BSItems;
 
-public final class ShinySwordTier implements IItemTier {
+import org.jetbrains.annotations.NotNull;
+
+public final class ShinySwordTier implements Tier {
     @Override
     public int getUses() {
         return 10_000;
@@ -33,8 +34,7 @@ public final class ShinySwordTier implements IItemTier {
     }
 
     @Override
-    public Ingredient getRepairIngredient() {
-        ItemStack stack = new ItemStack(BSItems.SHINY_SLIME_BALL, 1);
-        return Ingredient.of(stack);
+    public @NotNull Ingredient getRepairIngredient() {
+        return Ingredient.of(BSItems.SHINY_SLIME_BALL.get());
     }
 }

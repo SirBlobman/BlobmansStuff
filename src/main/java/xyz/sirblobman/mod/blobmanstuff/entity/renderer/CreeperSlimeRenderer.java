@@ -1,16 +1,17 @@
 package xyz.sirblobman.mod.blobmanstuff.entity.renderer;
 
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import xyz.sirblobman.mod.blobmanstuff.BlobmanStuffMod;
-import xyz.sirblobman.mod.blobmanstuff.entity.EntityCreeperSlime;
-import xyz.sirblobman.mod.blobmanstuff.entity.renderer.layer.CreeperSlimeGelLayer;
+import xyz.sirblobman.mod.blobmanstuff.entity.CreeperSlime;
+import xyz.sirblobman.mod.blobmanstuff.entity.renderer.layer.CreeperSlimeOuterLayer;
 import xyz.sirblobman.mod.blobmanstuff.entity.renderer.layer.CreeperSlimePoweredLayer;
+import xyz.sirblobman.mod.blobmanstuff.entity.renderer.model.BSModelLayers;
 import xyz.sirblobman.mod.blobmanstuff.entity.renderer.model.CreeperSlimeModel;
 
 import net.minecraftforge.api.distmarker.Dist;
@@ -18,45 +19,42 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
-public final class CreeperSlimeRenderer extends MobRenderer<EntityCreeperSlime, CreeperSlimeModel> {
-    private static final ResourceLocation CREEPER_SLIME = new ResourceLocation(BlobmanStuffMod.MOD_ID,
+public final class CreeperSlimeRenderer extends MobRenderer<CreeperSlime, CreeperSlimeModel> {
+    private static final ResourceLocation TEXTURE = new ResourceLocation(BlobmanStuffMod.MOD_ID,
             "textures/entity/creeper_slime.png");
 
-    public CreeperSlimeRenderer(EntityRendererManager manager) {
-        super(manager, new CreeperSlimeModel(16, 0.0F), 0.25F);
-        addLayer(new CreeperSlimeGelLayer(this));
-        addLayer(new CreeperSlimePoweredLayer(this));
+    public CreeperSlimeRenderer(Context context) {
+        super(context, new CreeperSlimeModel(context.bakeLayer(BSModelLayers.CREEPER_SLIME)), 0.25F);
+        addLayer(new CreeperSlimeOuterLayer(this, context.getModelSet()));
+        addLayer(new CreeperSlimePoweredLayer(this, context.getModelSet()));
     }
 
     @Override
-    public void render(EntityCreeperSlime entity, float p_225623_2_, float p_225623_3_,
-                       @NotNull MatrixStack matrixStack, @NotNull IRenderTypeBuffer bufferType, int p_225623_6_) {
+    public void render(@NotNull CreeperSlime entity, float p_115456_, float p_115457_,
+                       @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int p_115460_) {
         float slimeSize = entity.getSlimeSize();
-        this.shadowRadius = 0.25F * slimeSize;
-        super.render(entity, p_225623_2_, p_225623_3_, matrixStack, bufferType, p_225623_6_);
+        this.shadowRadius = (0.25F * slimeSize);
+        super.render(entity, p_115456_, p_115457_, poseStack, bufferSource, p_115460_);
     }
 
     @Override
-    protected void scale(EntityCreeperSlime creeperSlime, MatrixStack matrixStack, float p_225620_3_) {
-        float slimeSize = creeperSlime.getSlimeSize();
-        matrixStack.scale(0.999F, 0.999F, 0.999F);
-        matrixStack.translate(0.0D, 0.001F, 0.0D);
+    protected void scale(CreeperSlime entity, PoseStack poseStack, float scale) {
+        float value = 0.999F;
+        poseStack.scale(value, value, value);
+        poseStack.translate(0.0F, 0.001F, 0.0F);
 
-        float f2 = MathHelper.lerp(p_225620_3_, creeperSlime.slimeOldSquish, creeperSlime.slimeSquish);
-        f2 /= (slimeSize * 0.5F + 1.0F);
+        float slimeSize = entity.getSlimeSize();
+        float lerp = Mth.lerp(scale, entity.slimeOldSquish, entity.slimeSquish);
+        lerp /= (slimeSize * 0.5F + 1.0F);
+        float oneDivided = (1.0F / (lerp + 1.0F));
 
-        float f3 = 1.0F / (f2 + 1.0F);
-        matrixStack.scale(f3 * slimeSize, 1.0F / f3 * slimeSize, f3 * slimeSize);
+        float xzScale = (oneDivided * slimeSize);
+        float yScale = (1.0F / oneDivided * slimeSize);
+        poseStack.scale(xzScale, yScale, xzScale);
     }
 
     @Override
-    protected float getWhiteOverlayProgress(EntityCreeperSlime entity, float p_225625_2_) {
-        float swelling = entity.getSwelling(p_225625_2_);
-        return (swelling * 10.0F) % 2 == 0 ? 0.0F : MathHelper.clamp(swelling, 0.5F, 1.0F);
-    }
-
-    @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull EntityCreeperSlime entity) {
-        return CREEPER_SLIME;
+    public @NotNull ResourceLocation getTextureLocation(@NotNull CreeperSlime entity) {
+        return TEXTURE;
     }
 }

@@ -1,12 +1,14 @@
 package xyz.sirblobman.mod.blobmanstuff.entity.renderer.layer;
 
-import net.minecraft.client.renderer.entity.IEntityRenderer;
-import net.minecraft.client.renderer.entity.layers.EnergyLayer;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.EnergySwirlLayer;
+import net.minecraft.resources.ResourceLocation;
 
 import xyz.sirblobman.mod.blobmanstuff.BlobmanStuffMod;
-import xyz.sirblobman.mod.blobmanstuff.entity.EntityCreeperSlime;
+import xyz.sirblobman.mod.blobmanstuff.entity.CreeperSlime;
+import xyz.sirblobman.mod.blobmanstuff.entity.renderer.model.BSModelLayers;
 import xyz.sirblobman.mod.blobmanstuff.entity.renderer.model.CreeperSlimeModel;
 
 import net.minecraftforge.api.distmarker.Dist;
@@ -14,29 +16,31 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
-public final class CreeperSlimePoweredLayer extends EnergyLayer<EntityCreeperSlime, CreeperSlimeModel> {
-    private static final ResourceLocation CREEPER_SLIME_POWER = new ResourceLocation(BlobmanStuffMod.MOD_ID,
+public final class CreeperSlimePoweredLayer extends EnergySwirlLayer<CreeperSlime, CreeperSlimeModel> {
+    private static final ResourceLocation TEXTURE = new ResourceLocation(BlobmanStuffMod.MOD_ID,
             "textures/entity/creeper_armor.png");
 
     private final CreeperSlimeModel model;
 
-    public CreeperSlimePoweredLayer(IEntityRenderer<EntityCreeperSlime, CreeperSlimeModel> renderer) {
-        super(renderer);
-        this.model = new CreeperSlimeModel(0, 1.0F);
+    public CreeperSlimePoweredLayer(RenderLayerParent<CreeperSlime, CreeperSlimeModel> parent,
+                                    EntityModelSet set) {
+        super(parent);
+        ModelPart part = set.bakeLayer(BSModelLayers.CREEPER_SLIME_ARMOR);
+        this.model = new CreeperSlimeModel(part);
     }
 
     @Override
-    protected float xOffset(float p_225634_1_) {
-        return p_225634_1_ * 0.01F;
+    protected float xOffset(float scale) {
+        return (scale * 0.01F);
     }
 
     @Override
     protected @NotNull ResourceLocation getTextureLocation() {
-        return CREEPER_SLIME_POWER;
+        return TEXTURE;
     }
 
     @Override
-    protected @NotNull EntityModel<EntityCreeperSlime> model() {
+    protected @NotNull CreeperSlimeModel model() {
         return this.model;
     }
 }

@@ -2,17 +2,17 @@ package xyz.sirblobman.mod.blobmanstuff.entity.ai.goal;
 
 import java.util.EnumSet;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
 
-import xyz.sirblobman.mod.blobmanstuff.entity.EntityCreeperSlime;
+import xyz.sirblobman.mod.blobmanstuff.entity.CreeperSlime;
 
 public final class SlimeCreeperAttackGoal extends Goal {
-    private final EntityCreeperSlime slime;
+    private final CreeperSlime slime;
     private int growTiredTimer;
 
-    public SlimeCreeperAttackGoal(EntityCreeperSlime slime) {
+    public SlimeCreeperAttackGoal(CreeperSlime slime) {
         this.slime = slime;
         this.setFlags(EnumSet.of(Flag.LOOK));
     }
@@ -24,7 +24,7 @@ public final class SlimeCreeperAttackGoal extends Goal {
         } else if (!livingentity.isAlive()) {
             return false;
         } else {
-            return (!(livingentity instanceof PlayerEntity) || !((PlayerEntity) livingentity).abilities.invulnerable)
+            return (!(livingentity instanceof Player) || !((Player) livingentity).getAbilities().invulnerable)
                     && this.slime.getMoveControl() instanceof SlimeCreeperMovementController;
         }
     }
@@ -40,7 +40,7 @@ public final class SlimeCreeperAttackGoal extends Goal {
             return false;
         } else if (!livingentity.isAlive()) {
             return false;
-        } else if (livingentity instanceof PlayerEntity && ((PlayerEntity)livingentity).abilities.invulnerable) {
+        } else if (livingentity instanceof Player && ((Player)livingentity).getAbilities().invulnerable) {
             return false;
         } else {
             return --this.growTiredTimer > 0;
@@ -54,7 +54,7 @@ public final class SlimeCreeperAttackGoal extends Goal {
         }
 
         this.slime.lookAt(target, 10.0F, 10.0F);
-        ((SlimeCreeperMovementController)this.slime.getMoveControl()).setDirection(this.slime.yRot,
+        ((SlimeCreeperMovementController)this.slime.getMoveControl()).setDirection(this.slime.getYRot(),
                 this.slime.isDealsDamage());
     }
 }

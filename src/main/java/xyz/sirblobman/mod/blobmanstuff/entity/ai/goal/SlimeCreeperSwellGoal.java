@@ -2,16 +2,16 @@ package xyz.sirblobman.mod.blobmanstuff.entity.ai.goal;
 
 import java.util.EnumSet;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
 
-import xyz.sirblobman.mod.blobmanstuff.entity.EntityCreeperSlime;
+import xyz.sirblobman.mod.blobmanstuff.entity.CreeperSlime;
 
 public final class SlimeCreeperSwellGoal extends Goal {
-   private final EntityCreeperSlime creeper;
+   private final CreeperSlime creeper;
    private LivingEntity target;
 
-   public SlimeCreeperSwellGoal(EntityCreeperSlime p_i1655_1_) {
+   public SlimeCreeperSwellGoal(CreeperSlime p_i1655_1_) {
       this.creeper = p_i1655_1_;
       this.setFlags(EnumSet.of(Goal.Flag.MOVE));
    }
@@ -35,7 +35,7 @@ public final class SlimeCreeperSwellGoal extends Goal {
          this.creeper.setSwellDir(-1);
       } else if (this.creeper.distanceToSqr(this.target) > 49.0D) {
          this.creeper.setSwellDir(-1);
-      } else if (!this.creeper.getSensing().canSee(this.target)) {
+      } else if (!this.creeper.getSensing().hasLineOfSight(this.target)) {
          this.creeper.setSwellDir(-1);
       } else {
          this.creeper.setSwellDir(1);

@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/slime_block",
+  "parent": "blobmanstuff:block/colored_slime_block",
   "textures": {
     "particle": "blobmanstuff:block/black_slime_block",
     "texture": "blobmanstuff:block/black_slime_block"

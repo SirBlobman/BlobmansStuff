@@ -1,87 +1,70 @@
 package xyz.sirblobman.mod.blobmanstuff.item;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.function.Supplier;
 
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.ArmorItem.Type;
+import net.minecraft.world.item.Item;
 
 import xyz.sirblobman.mod.blobmanstuff.BlobmanStuffMod;
 import xyz.sirblobman.mod.blobmanstuff.type.SlimeballColor;
 
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
-@ObjectHolder(BlobmanStuffMod.MOD_ID)
 public final class BSItems {
-    private static final List<Item> ALL_ITEMS;
+    public static final DeferredRegister<Item> ITEMS =
+            DeferredRegister.create(ForgeRegistries.ITEMS, BlobmanStuffMod.MOD_ID);
 
-    static {
-        ALL_ITEMS = new ArrayList<>();
+    // Slime Balls
+    public static final RegistryObject<Item> BLUE_SLIME_BALL = registerItem("blue_slime_ball",
+            () -> new ItemColoredSlimeball(SlimeballColor.BLUE));
+    public static final RegistryObject<Item> YELLOW_SLIME_BALL = registerItem("yellow_slime_ball",
+            () -> new ItemColoredSlimeball(SlimeballColor.YELLOW));
+    public static final RegistryObject<Item> RED_SLIME_BALL = registerItem("red_slime_ball",
+            () -> new ItemColoredSlimeball(SlimeballColor.RED));
+    public static final RegistryObject<Item> SHINY_SLIME_BALL = registerItem("shiny_slime_ball",
+            () -> new ItemColoredSlimeball(SlimeballColor.SHINY));
+    public static final RegistryObject<Item> BLACK_SLIME_BALL = registerItem("black_slime_ball",
+            () -> new ItemColoredSlimeball(SlimeballColor.BLACK));
+
+    // Blobman Armor
+    public static final RegistryObject<Item> BLOBMAN_CROWN = registerItem("blobman_crown",
+            () -> new ItemBlobmanArmor(Type.HELMET));
+    public static final RegistryObject<Item> BLOBMAN_SUIT = registerItem("blobman_suit",
+            () -> new ItemBlobmanArmor(Type.CHESTPLATE));
+    public static final RegistryObject<Item> BLOBMAN_PANTS = registerItem("blobman_pants",
+            () -> new ItemBlobmanArmor(Type.LEGGINGS));
+    public static final RegistryObject<Item> BLOBMAN_SHOES = registerItem("blobman_shoes",
+            () -> new ItemBlobmanArmor(Type.BOOTS));
+
+    // Blue Slime Armor
+    public static final RegistryObject<Item> BLUE_SLIME_HELMET = registerItem("blue_slime_helmet",
+            () -> new ItemBlueSlimeArmor(Type.HELMET));
+    public static final RegistryObject<Item> BLUE_SLIME_CHESTPLATE = registerItem("blue_slime_chestplate",
+            () -> new ItemBlueSlimeArmor(Type.CHESTPLATE));
+    public static final RegistryObject<Item> BLUE_SLIME_LEGGINGS = registerItem("blue_slime_leggings",
+            () -> new ItemBlueSlimeArmor(Type.LEGGINGS));
+    public static final RegistryObject<Item> BLUE_SLIME_BOOTS = registerItem("blue_slime_boots",
+            () -> new ItemBlueSlimeArmor(Type.BOOTS));
+
+    // Overpowered Swords
+    public static final RegistryObject<Item> SHINY_SWORD = registerItem("shiny_sword", ItemShinySword::new);
+    public static final RegistryObject<Item> ULTRA_SWORD = registerItem("ultra_sword", ItemUltraSword::new);
+
+    // Wand Items
+    public static final RegistryObject<Item> WAND_STICK = registerItem("wand_stick", ItemSimple::new);
+    public static final RegistryObject<Item> SLIME_WAND = registerItem("slime_wand",
+            () -> new ItemSlimeWand(0));
+    public static final RegistryObject<Item> BLUE_SLIME_WAND = registerItem("blue_slime_wand",
+            () -> new ItemSlimeWand(1));
+
+    private static <T extends Item> RegistryObject<T> registerItem(String id, Supplier<T> supplier) {
+        return ITEMS.register(id, supplier);
     }
 
-    public static List<Item> getAllItems() {
-        return Collections.unmodifiableList(ALL_ITEMS);
-    }
-
-    @ObjectHolder("blue_slime_ball") public static Item BLUE_SLIME_BALL;
-    @ObjectHolder("blue_slime_ball") public static Item YELLOW_SLIME_BALL;
-    @ObjectHolder("blue_slime_ball") public static Item RED_SLIME_BALL;
-    @ObjectHolder("blue_slime_ball") public static Item SHINY_SLIME_BALL;
-    @ObjectHolder("blue_slime_ball") public static Item BLACK_SLIME_BALL;
-
-    @ObjectHolder("blobman_crown") public static Item BLOBMAN_CROWN;
-    @ObjectHolder("blobman_suit") public static Item BLOBMAN_SUIT;
-    @ObjectHolder("blobman_pants") public static Item BLOBMAN_PANTS;
-    @ObjectHolder("blobman_shoes") public static Item BLOBMAN_SHOES;
-
-    @ObjectHolder("blue_slime_helmet") public static Item BLUE_SLIME_HELMET;
-    @ObjectHolder("blue_slime_chestplate") public static Item BLUE_SLIME_CHESTPLATE;
-    @ObjectHolder("blue_slime_leggings") public static Item BLUE_SLIME_LEGGINGS;
-    @ObjectHolder("blue_slime_boots") public static Item BLUE_SLIME_BOOTS;
-
-    @ObjectHolder("shiny_sword") public static Item SHINY_SWORD;
-    @ObjectHolder("ultra_sword") public static Item ULTRA_SWORD;
-
-    @ObjectHolder("slime_wand") public static Item SLIME_WAND;
-    @ObjectHolder("blue_slime_wand") public static Item BLUE_SLIME_WAND;
-    @ObjectHolder("wand_stick") public static Item WAND_STICK;
-
-    public static void register(IForgeRegistry<Item> registry) {
-        SlimeballColor[] slimeballColors = SlimeballColor.values();
-        for (SlimeballColor slimeballColor : slimeballColors) {
-            String nameLowercase = slimeballColor.name().toLowerCase(Locale.US);
-            String id = (nameLowercase + "_slime_ball");
-            createItem(new ItemColoredSlimeball(slimeballColor), id);
-        }
-
-        createItem(new ItemShinySword(), "shiny_sword");
-        createItem(new ItemUltraSword(), "ultra_sword");
-
-        createItem(new ItemBlobmanArmor(EquipmentSlotType.HEAD), "blobman_crown");
-        createItem(new ItemBlobmanArmor(EquipmentSlotType.CHEST), "blobman_suit");
-        createItem(new ItemBlobmanArmor(EquipmentSlotType.LEGS), "blobman_pants");
-        createItem(new ItemBlobmanArmor(EquipmentSlotType.FEET), "blobman_shoes");
-
-        createItem(new ItemBlueSlimeArmor(EquipmentSlotType.HEAD), "blue_slime_helmet");
-        createItem(new ItemBlueSlimeArmor(EquipmentSlotType.CHEST), "blue_slime_chestplate");
-        createItem(new ItemBlueSlimeArmor(EquipmentSlotType.LEGS), "blue_slime_leggings");
-        createItem(new ItemBlueSlimeArmor(EquipmentSlotType.FEET), "blue_slime_boots");
-
-        createItem(new ItemSlimeWand(0), "slime_wand");
-        createItem(new ItemSlimeWand(1), "blue_slime_wand");
-        createItem(new ItemSimple(), "wand_stick");
-
-        List<Item> allItems = getAllItems();
-        for (Item item : allItems) {
-            registry.register(item);
-        }
-    }
-
-    private static void createItem(Item item, String id) {
-        item.setRegistryName(BlobmanStuffMod.MOD_ID, id);
-        ALL_ITEMS.add(item);
+    public static void registerItems(IEventBus eventBus) {
+        ITEMS.register(eventBus);
     }
 }

@@ -1,56 +1,57 @@
 package xyz.sirblobman.mod.blobmanstuff.entity;
 
 import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Random;
-import javax.annotation.Nullable;
 
-import net.minecraft.entity.AreaEffectCloudEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IChargeableMob;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap.MutableAttribute;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.SlimeEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.network.datasync.IDataSerializer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializer;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.Explosion.Mode;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biomes;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.AreaEffectCloud;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.PowerableMob;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.Level.ExplosionInteraction;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
 
 import xyz.sirblobman.mod.blobmanstuff.entity.ai.goal.SlimeCreeperAttackGoal;
 import xyz.sirblobman.mod.blobmanstuff.entity.ai.goal.SlimeCreeperFaceRandomGoal;
@@ -61,50 +62,59 @@ import xyz.sirblobman.mod.blobmanstuff.entity.ai.goal.SlimeCreeperSwellGoal;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
-@OnlyIn(value = Dist.CLIENT, _interface = IChargeableMob.class)
-public final class EntityCreeperSlime extends MonsterEntity implements IChargeableMob {
-    public static boolean checkCreeperSlimeSpawnRules(EntityType<EntityCreeperSlime> type, IWorld world,
-                                                      SpawnReason spawnReason, BlockPos position, Random random) {
-        if (world.getDifficulty() != Difficulty.PEACEFUL) {
-            if (Objects.equals(world.getBiomeName(position), Optional.of(Biomes.SWAMP))
-                    && position.getY() > 50 && position.getY() < 70 && random.nextFloat() < 0.5F
-                    && random.nextFloat() < world.getMoonBrightness()
-                    && world.getMaxLocalRawBrightness(position) <= random.nextInt(8)) {
-                return checkMobSpawnRules(type, world, spawnReason, position, random);
-            }
+@OnlyIn(value = Dist.CLIENT, _interface = PowerableMob.class)
+public final class CreeperSlime extends Monster implements PowerableMob {
+    public static boolean checkCustomSpawnRules(EntityType<CreeperSlime> type, LevelAccessor world,
+                                                MobSpawnType spawnReason, BlockPos position, RandomSource random) {
+        Difficulty difficulty = world.getDifficulty();
+        if (difficulty == Difficulty.PEACEFUL) {
+            return false;
+        }
 
-            if (!(world instanceof ISeedReader)) {
-                return false;
-            }
+        Holder<Biome> biome = world.getBiome(position);
+        boolean checkBiome = biome.is(BiomeTags.ALLOWS_SURFACE_SLIME_SPAWNS);
+        boolean checkMinY = position.getY() > 50;
+        boolean checkMaxY = position.getY() < 70;
+        boolean checkRandom = random.nextFloat() < 0.5F;
+        boolean checkMoonBrightness = random.nextFloat() < world.getMoonBrightness();
+        boolean checkRawBrightness = world.getMaxLocalRawBrightness(position) <= random.nextInt(8);
+        if (checkBiome && checkMinY && checkMaxY && checkRandom && checkMoonBrightness && checkRawBrightness) {
+            return checkMobSpawnRules(type, world, spawnReason, position, random);
+        }
 
-            ChunkPos chunkpos = new ChunkPos(position);
-            boolean flag = SharedSeedRandom.seedSlimeChunk(chunkpos.x, chunkpos.z, ((ISeedReader)world).getSeed(),
-                    987234911L).nextInt(10) == 0;
-            if (random.nextInt(10) == 0 && flag && position.getY() < 40) {
-                return checkMobSpawnRules(type, world, spawnReason, position, random);
-            }
+        if (!(world instanceof WorldGenLevel genLevel)) {
+            return false;
+        }
+
+        ChunkPos chunkPos = new ChunkPos(position);
+        long worldSeed = genLevel.getSeed();
+        long power = 987_234_911L;
+
+        RandomSource randomSource = WorldgenRandom.seedSlimeChunk(chunkPos.x, chunkPos.z, worldSeed, power);
+        boolean flag = randomSource.nextInt() == 0;
+        if (random.nextInt(10) == 0 && flag && position.getY() < 40) {
+            return checkMobSpawnRules(type, world, spawnReason,position, random);
         }
 
         return false;
     }
 
-    private static final DataParameter<Integer> DATA_SLIME_SIZE = defineId(DataSerializers.INT);
-    private static final DataParameter<Integer> DATA_CREEPER_SWELL_DIR = defineId(DataSerializers.INT);
-    private static final DataParameter<Boolean> DATA_CREEPER_IS_POWERED = defineId(DataSerializers.BOOLEAN);
-    private static final DataParameter<Boolean> DATA_CREEPER_IS_IGNITED = defineId(DataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_SLIME_SIZE = defineId(EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_CREEPER_SWELL_DIR = defineId(EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_CREEPER_IS_POWERED = defineId(EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_CREEPER_IS_IGNITED = defineId(EntityDataSerializers.BOOLEAN);
 
-    private static <T> DataParameter<T> defineId(IDataSerializer<T> serializer) {
-        return EntityDataManager.defineId(EntityCreeperSlime.class, serializer);
+    private static <T> EntityDataAccessor<T> defineId(EntityDataSerializer<T> serializer) {
+        return SynchedEntityData.defineId(CreeperSlime.class, serializer);
     }
 
-    public static MutableAttribute createAttributes() {
-        MutableAttribute attributeMap = MonsterEntity.createMonsterAttributes();
-        attributeMap.add(Attributes.MOVEMENT_SPEED, 0.25D);
-        return attributeMap;
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Monster.createMonsterAttributes();
+        builder.add(Attributes.MOVEMENT_SPEED, 0.25D);
+        return builder;
     }
 
     public float slimeTargetSquish;
@@ -117,7 +127,7 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
     private int creeperMaxSwell;
     private int creeperExplosionRadius;
 
-    public EntityCreeperSlime(EntityType<? extends EntityCreeperSlime> type, World world) {
+    public CreeperSlime(EntityType<? extends CreeperSlime> type, Level world) {
         super(type, world);
         this.creeperMaxSwell = 30;
         this.creeperExplosionRadius = 3;
@@ -134,7 +144,7 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
         this.goalSelector.addGoal(5, new SlimeCreeperHopGoal(this));
 
         // Targets
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
     }
 
@@ -148,7 +158,7 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
     }
 
     @Override
-    public void addAdditionalSaveData(@NotNull CompoundNBT tag) {
+    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
 
         int size = (getSlimeSize() - 1);
@@ -165,7 +175,7 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
     }
 
     @Override
-    public void readAdditionalSaveData(@NotNull CompoundNBT tag) {
+    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
 
         if (tag.contains("Fuse", 99)) {
@@ -199,9 +209,9 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
     }
 
     @Override
-    public @NotNull EntitySize getDimensions(@NotNull Pose pose) {
+    public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
         float slimeSize = getSlimeSize();
-        EntitySize dimensions = super.getDimensions(pose);
+        EntityDimensions dimensions = super.getDimensions(pose);
         return dimensions.scale(0.255F, slimeSize);
     }
 
@@ -216,11 +226,11 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
     }
 
     @Override
-    public void onSyncedDataUpdated(@NotNull DataParameter<?> data) {
+    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> data) {
         if (DATA_SLIME_SIZE.equals(data)) {
             refreshDimensions();
 
-            this.yRot = this.yHeadRot;
+            setYRot(this.yHeadRot);
             this.yBodyRot = this.yHeadRot;
             if (isInWater() && this.random.nextInt(20) == 0) {
                 doWaterSplashEffect();
@@ -228,11 +238,6 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
         }
 
         super.onSyncedDataUpdated(data);
-    }
-
-    @Override
-    public boolean causeFallDamage(float p_225503_1_, float p_225503_2_) {
-        return false;
     }
 
     @Override
@@ -246,12 +251,12 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
     }
 
     @Override
-    public void thunderHit(@NotNull ServerWorld world, @NotNull LightningBoltEntity lightning) {
+    public void thunderHit(@NotNull ServerLevel world, @NotNull LightningBolt lightning) {
         this.entityData.set(DATA_CREEPER_IS_POWERED, true);
     }
 
     @Override
-    protected @NotNull ActionResultType mobInteract(@NotNull PlayerEntity player, @NotNull Hand hand) {
+    protected @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
         if (item != Items.FLINT_AND_STEEL) {
@@ -260,14 +265,14 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
 
         this.level.playSound(player, getX(), getY(), getZ(), SoundEvents.FLINTANDSTEEL_USE, getSoundSource(),
                 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
-        if (this.level.isClientSide()) {
+        if (!this.level.isClientSide()) {
             ignite();
             stack.hurtAndBreak(1, player, newPlayer -> {
                 newPlayer.broadcastBreakEvent(hand);
             });
         }
 
-        return ActionResultType.sidedSuccess(this.level.isClientSide());
+        return InteractionResult.sidedSuccess(this.level.isClientSide());
     }
 
     @Override
@@ -281,15 +286,14 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
         return this.entityData.get(DATA_CREEPER_IS_POWERED);
     }
 
-
     @Override
-    public @Nullable ILivingEntityData finalizeSpawn(@NotNull IServerWorld world,
-                                                     @NotNull DifficultyInstance difficulty,
-                                                     @NotNull SpawnReason spawnReason,
-                                                     @Nullable ILivingEntityData entityData,
-                                                     @Nullable CompoundNBT nbtData) {
-        int i = this.random.nextInt(3);
-        if (i < 2 && this.random.nextFloat() < 0.5F * difficulty.getSpecialMultiplier()) {
+    @SuppressWarnings({"deprecation", "OverrideOnly"}) // Overrides are fine
+    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor world, @NotNull DifficultyInstance difficulty,
+                                        @NotNull MobSpawnType spawnReason, SpawnGroupData entityData,
+                                        CompoundTag nbtData) {
+        RandomSource randomSource = world.getRandom();
+        int i = randomSource.nextInt(3);
+        if (i < 2 && randomSource.nextFloat() < 0.5F * difficulty.getSpecialMultiplier()) {
             ++i;
         }
 
@@ -299,7 +303,7 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
     }
 
     @Override
-    public @NotNull IPacket<?> getAddEntityPacket() {
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -340,8 +344,8 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
             for(int j = 0; j < i * 8; ++j) {
                 float f = this.random.nextFloat() * ((float)Math.PI * 2F);
                 float f1 = this.random.nextFloat() * 0.5F + 0.5F;
-                float f2 = MathHelper.sin(f) * (float)i * 0.5F * f1;
-                float f3 = MathHelper.cos(f) * (float)i * 0.5F * f1;
+                float f2 = Mth.sin(f) * (float)i * 0.5F * f1;
+                float f3 = Mth.cos(f) * (float)i * 0.5F * f1;
                 this.level.addParticle(this.getParticleType(), this.getX() + (double)f2, this.getY(), this.getZ() + (double)f3, 0.0D, 0.0D, 0.0D);
             }
 
@@ -369,7 +373,7 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
 
     @OnlyIn(Dist.CLIENT)
     public float getSwelling(float p_70831_1_) {
-        return MathHelper.lerp(p_70831_1_, (float)this.creeperOldSwell, (float)this.creeperSwell) / (float)(this.creeperMaxSwell - 2);
+        return Mth.lerp(p_70831_1_, (float)this.creeperOldSwell, (float)this.creeperSwell) / (float)(this.creeperMaxSwell - 2);
     }
 
     public int getSwellDir() {
@@ -405,7 +409,7 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
         this.xpReward = size;
     }
 
-    private IParticleData getParticleType() {
+    private ParticleOptions getParticleType() {
         return ParticleTypes.ITEM_SLIME;
     }
 
@@ -418,48 +422,53 @@ public final class EntityCreeperSlime extends MonsterEntity implements IChargeab
             return;
         }
 
-        boolean mobGriefing = ForgeEventFactory.getMobGriefingEvent(this.level, this);
-        Mode explosionMode = (mobGriefing ? Mode.DESTROY : Mode.NONE);
-        int multiplier = isPowered() ? 2 : 1;
-
-        this.dead = true;
+        boolean powered = isPowered();
+        int multiplier = (powered ? 2 : 1);
         int explosionRadius = (this.creeperExplosionRadius * multiplier);
-        this.level.explode(this, getX(), getY(), getZ(), explosionRadius, explosionMode);
-        remove();
+        this.dead = true;
+
+        this.level.explode(this, getX(), getY(), getZ(), explosionRadius, ExplosionInteraction.MOB);
+        discard();
         spawnLingeringCloud();
 
+
+        Component customName = getCustomName();
+        int slimeSize = getSlimeSize();
+        boolean noAi = isNoAi();
+
         for (int i = 0; i < explosionRadius; i++) {
-            SlimeEntity slimeEntity = EntityType.SLIME.create(this.level);
+            Slime slimeEntity = EntityType.SLIME.create(this.level);
             if (slimeEntity == null) {
                 continue;
             }
 
-            slimeEntity.setPos(getX(), getY(), getZ());
+            if (this.isPersistenceRequired()) {
+                slimeEntity.setPersistenceRequired();
+            }
 
-            CompoundNBT tag = new CompoundNBT();
-            slimeEntity.save(tag);
-            tag.putInt("Size", 11);
-            slimeEntity.load(tag);
-
+            slimeEntity.setCustomName(customName);
+            slimeEntity.setNoAi(noAi);
+            slimeEntity.setSize(slimeSize, true);
+            slimeEntity.moveTo(getX(), getY() + 1.5D, getZ());
             this.level.addFreshEntity(slimeEntity);
         }
     }
 
     private void spawnLingeringCloud() {
-        Collection<EffectInstance> activeEffectCollection = getActiveEffects();
+        Collection<MobEffectInstance> activeEffectCollection = getActiveEffects();
         if (activeEffectCollection.isEmpty()) {
             return;
         }
 
-        AreaEffectCloudEntity effectCloud = new AreaEffectCloudEntity(this.level, getX(), getY(), getZ());
+        AreaEffectCloud effectCloud = new AreaEffectCloud(this.level, getX(), getY(), getZ());
         effectCloud.setRadius(2.5F);
         effectCloud.setRadiusOnUse(-0.5F);
         effectCloud.setWaitTime(10);
         effectCloud.setDuration(effectCloud.getDuration() / 2);
         effectCloud.setRadiusPerTick(-effectCloud.getRadius() / effectCloud.getDuration());
 
-        for (EffectInstance effect : activeEffectCollection) {
-            EffectInstance effectCopy = new EffectInstance(effect);
+        for (MobEffectInstance effect : activeEffectCollection) {
+            MobEffectInstance effectCopy = new MobEffectInstance(effect);
             effectCloud.addEffect(effectCopy);
         }
 

@@ -1,11 +1,11 @@
 package xyz.sirblobman.mod.blobmanstuff.block;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SlimeBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SlimeBlock;
+import net.minecraft.world.phys.Vec3;
 
 import xyz.sirblobman.mod.blobmanstuff.type.SlimeballColor;
 
@@ -31,7 +31,7 @@ public final class BlockColoredSlime extends SlimeBlock {
     }
 
     @Override
-    public void updateEntityAfterFallOn(@NotNull IBlockReader reader, Entity entity) {
+    public void updateEntityAfterFallOn(@NotNull BlockGetter reader, Entity entity) {
         if (entity.isSuppressingBounce()) {
             super.updateEntityAfterFallOn(reader, entity);
             return;
@@ -41,7 +41,7 @@ public final class BlockColoredSlime extends SlimeBlock {
     }
 
     private void bounceUp(Entity entity) {
-        Vector3d vector3d = entity.getDeltaMovement();
+        Vec3 vector3d = entity.getDeltaMovement();
         if (vector3d.y < 0.0D) {
             double multiplier = entity instanceof LivingEntity ? 1.0D : 0.8D;
             double bounceHeight = (multiplier * getBounceHeight());

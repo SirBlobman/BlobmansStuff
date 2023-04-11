@@ -2,15 +2,15 @@ package xyz.sirblobman.mod.blobmanstuff.entity.ai.goal;
 
 import java.util.EnumSet;
 
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.goal.Goal;
 
-import xyz.sirblobman.mod.blobmanstuff.entity.EntityCreeperSlime;
+import xyz.sirblobman.mod.blobmanstuff.entity.CreeperSlime;
 
 public final class SlimeCreeperHopGoal extends Goal {
-    private final EntityCreeperSlime slime;
+    private final CreeperSlime slime;
 
-    public SlimeCreeperHopGoal(EntityCreeperSlime slime) {
+    public SlimeCreeperHopGoal(CreeperSlime slime) {
         this.slime = slime;
         setFlags(EnumSet.of(Flag.JUMP, Flag.MOVE));
     }
@@ -22,9 +22,8 @@ public final class SlimeCreeperHopGoal extends Goal {
 
     @Override
     public void tick() {
-        MovementController moveControl = this.slime.getMoveControl();
-        if (moveControl instanceof SlimeCreeperMovementController) {
-            SlimeCreeperMovementController controller = (SlimeCreeperMovementController) moveControl;
+        MoveControl moveControl = this.slime.getMoveControl();
+        if (moveControl instanceof SlimeCreeperMovementController controller) {
             controller.setWantedMovement(1.0D);
         }
     }

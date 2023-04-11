@@ -1,23 +1,23 @@
 package xyz.sirblobman.mod.blobmanstuff.item.material;
 
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.ArmorItem.Type;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import xyz.sirblobman.mod.blobmanstuff.BlobmanStuffMod;
 
 import org.jetbrains.annotations.NotNull;
 
-public final class BlobmanArmorMaterial implements IArmorMaterial {
+public final class BlobmanArmorMaterial implements ArmorMaterial {
     @Override
-    public int getDurabilityForSlot(@NotNull EquipmentSlotType slot) {
+    public int getDurabilityForType(@NotNull Type slot) {
         return 1024;
     }
 
     @Override
-    public int getDefenseForSlot(@NotNull EquipmentSlotType slot) {
+    public int getDefenseForType(@NotNull Type slot) {
         return 5;
     }
 
