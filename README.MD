@@ -4,9 +4,9 @@ A slime-themed mod that adds custom items, blocks, and mobs.
 
 ## Requirements
 
-- Java 8
-- Minecraft 1.16.5
-- Forge 1.16.5-36.2.39 or higher.
+- Java 17
+- Minecraft 1.19.4
+- Forge 1.19.4-45.0.43 or higher.
 
 ## Compilation Instructions
 
