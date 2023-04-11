@@ -6,6 +6,7 @@ import net.minecraft.world.item.ArmorItem.Type;
 import net.minecraft.world.item.Item;
 
 import xyz.sirblobman.mod.blobmanstuff.BlobmanStuffMod;
+import xyz.sirblobman.mod.blobmanstuff.entity.BSEntityTypes;
 import xyz.sirblobman.mod.blobmanstuff.type.SlimeballColor;
 
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -65,6 +66,7 @@ public final class BSItems {
     }
 
     public static void registerItems(IEventBus eventBus) {
+        BSEntityTypes.registerSpawnEggs();
         ITEMS.register(eventBus);
     }
 }
