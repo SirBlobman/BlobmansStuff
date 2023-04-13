@@ -67,6 +67,25 @@ import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(value = Dist.CLIENT, _interface = PowerableMob.class)
 public final class CreeperSlime extends Monster implements PowerableMob {
+    private static final EntityDataAccessor<Integer> DATA_SLIME_SIZE = defineId(EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_CREEPER_SWELL_DIR = defineId(EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_CREEPER_IS_POWERED = defineId(EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_CREEPER_IS_IGNITED = defineId(EntityDataSerializers.BOOLEAN);
+    public float slimeTargetSquish;
+    public float slimeSquish;
+    public float slimeOldSquish;
+    private boolean slimeWasOnGround;
+    private int creeperOldSwell;
+    private int creeperSwell;
+    private int creeperMaxSwell;
+    private int creeperExplosionRadius;
+    public CreeperSlime(EntityType<? extends CreeperSlime> type, Level world) {
+        super(type, world);
+        this.creeperMaxSwell = 30;
+        this.creeperExplosionRadius = 3;
+        this.moveControl = new SlimeCreeperMovementController(this);
+    }
+
     public static boolean checkCustomSpawnRules(EntityType<CreeperSlime> type, LevelAccessor world,
                                                 MobSpawnType spawnReason, BlockPos position, RandomSource random) {
         Difficulty difficulty = world.getDifficulty();
@@ -96,16 +115,11 @@ public final class CreeperSlime extends Monster implements PowerableMob {
         RandomSource randomSource = WorldgenRandom.seedSlimeChunk(chunkPos.x, chunkPos.z, worldSeed, power);
         boolean flag = randomSource.nextInt() == 0;
         if (random.nextInt(10) == 0 && flag && position.getY() < 40) {
-            return checkMobSpawnRules(type, world, spawnReason,position, random);
+            return checkMobSpawnRules(type, world, spawnReason, position, random);
         }
 
         return false;
     }
-
-    private static final EntityDataAccessor<Integer> DATA_SLIME_SIZE = defineId(EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> DATA_CREEPER_SWELL_DIR = defineId(EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> DATA_CREEPER_IS_POWERED = defineId(EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> DATA_CREEPER_IS_IGNITED = defineId(EntityDataSerializers.BOOLEAN);
 
     private static <T> EntityDataAccessor<T> defineId(EntityDataSerializer<T> serializer) {
         return SynchedEntityData.defineId(CreeperSlime.class, serializer);
@@ -115,23 +129,6 @@ public final class CreeperSlime extends Monster implements PowerableMob {
         AttributeSupplier.Builder builder = Monster.createMonsterAttributes();
         builder.add(Attributes.MOVEMENT_SPEED, 0.25D);
         return builder;
-    }
-
-    public float slimeTargetSquish;
-    public float slimeSquish;
-    public float slimeOldSquish;
-    private boolean slimeWasOnGround;
-
-    private int creeperOldSwell;
-    private int creeperSwell;
-    private int creeperMaxSwell;
-    private int creeperExplosionRadius;
-
-    public CreeperSlime(EntityType<? extends CreeperSlime> type, Level world) {
-        super(type, world);
-        this.creeperMaxSwell = 30;
-        this.creeperExplosionRadius = 3;
-        this.moveControl = new SlimeCreeperMovementController(this);
     }
 
     @Override
@@ -341,12 +338,12 @@ public final class CreeperSlime extends Monster implements PowerableMob {
 
         if (this.onGround && !this.slimeWasOnGround) {
             int i = this.getSlimeSize();
-            for(int j = 0; j < i * 8; ++j) {
-                float f = this.random.nextFloat() * ((float)Math.PI * 2F);
+            for (int j = 0; j < i * 8; ++j) {
+                float f = this.random.nextFloat() * ((float) Math.PI * 2F);
                 float f1 = this.random.nextFloat() * 0.5F + 0.5F;
-                float f2 = Mth.sin(f) * (float)i * 0.5F * f1;
-                float f3 = Mth.cos(f) * (float)i * 0.5F * f1;
-                this.level.addParticle(this.getParticleType(), this.getX() + (double)f2, this.getY(), this.getZ() + (double)f3, 0.0D, 0.0D, 0.0D);
+                float f2 = Mth.sin(f) * (float) i * 0.5F * f1;
+                float f3 = Mth.cos(f) * (float) i * 0.5F * f1;
+                this.level.addParticle(this.getParticleType(), this.getX() + (double) f2, this.getY(), this.getZ() + (double) f3, 0.0D, 0.0D, 0.0D);
             }
 
             this.playSound(this.getSquishSound(), this.getSoundVolume(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
@@ -373,7 +370,7 @@ public final class CreeperSlime extends Monster implements PowerableMob {
 
     @OnlyIn(Dist.CLIENT)
     public float getSwelling(float p_70831_1_) {
-        return Mth.lerp(p_70831_1_, (float)this.creeperOldSwell, (float)this.creeperSwell) / (float)(this.creeperMaxSwell - 2);
+        return Mth.lerp(p_70831_1_, (float) this.creeperOldSwell, (float) this.creeperSwell) / (float) (this.creeperMaxSwell - 2);
     }
 
     public int getSwellDir() {

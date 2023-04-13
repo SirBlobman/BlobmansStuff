@@ -25,6 +25,11 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 public final class BlueSlime extends Slime {
+    public BlueSlime(EntityType<? extends Slime> type, Level world) {
+        super(type, world);
+        getJumpPower();
+    }
+
     public static boolean checkCustomSpawnRules(EntityType<BlueSlime> type, LevelAccessor world,
                                                 MobSpawnType spawnReason, BlockPos position, RandomSource random) {
         Difficulty difficulty = world.getDifficulty();
@@ -54,15 +59,10 @@ public final class BlueSlime extends Slime {
         RandomSource randomSource = WorldgenRandom.seedSlimeChunk(chunkPos.x, chunkPos.z, worldSeed, power);
         boolean flag = randomSource.nextInt() == 0;
         if (random.nextInt(10) == 0 && flag && position.getY() < 40) {
-            return checkMobSpawnRules(type, world, spawnReason,position, random);
+            return checkMobSpawnRules(type, world, spawnReason, position, random);
         }
 
         return false;
-    }
-
-    public BlueSlime(EntityType<? extends Slime> type, Level world) {
-        super(type, world);
-        getJumpPower();
     }
 
     @Override

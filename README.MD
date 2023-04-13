@@ -1,6 +1,6 @@
 # Blobman's Stuff Mod
 
-A slime-themed mod that adds custom items, blocks, and mobs. 
+A slime-themed mod that adds custom items, blocks, and mobs.
 
 ## Requirements
 
@@ -13,11 +13,13 @@ A slime-themed mod that adds custom items, blocks, and mobs.
 You can compile this project yourself by using the included gradle wrapper.
 
 **Windows:**
+
 ```shell
 > gradlew.bat clean build
 ```
 
 **Unix:**
+
 ```shell
 $ ./gradlew clean build
 ```

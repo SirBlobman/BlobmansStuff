@@ -1,31 +1,31 @@
-modLoader="javafml"
-loaderVersion="[45,)"
-license="GNU GPL v3, https://www.gnu.org/licenses/gpl-3.0.en.html"
-issueTrackerURL="https://github.com/SirBlobman/BlobmansStuff/issues"
+modLoader = "javafml"
+loaderVersion = "[45,)"
+license = "GNU GPL v3, https://www.gnu.org/licenses/gpl-3.0.en.html"
+issueTrackerURL = "https://github.com/SirBlobman/BlobmansStuff/issues"
 [[mods]]
-modId="blobmanstuff"
-version="${file.jarVersion}"
-displayName="Blobman's Stuff"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/blobmans-stuff"
-logoFile="logo.png"
-credits="The developers at Mojang and Forge for making this mod possible."
-authors="SirBlobman"
-displayTest="MATCH_VERSION"
-description='''
+modId = "blobmanstuff"
+version = "${file.jarVersion}"
+displayName = "Blobman's Stuff"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/blobmans-stuff"
+logoFile = "logo.png"
+credits = "The developers at Mojang and Forge for making this mod possible."
+authors = "SirBlobman"
+displayTest = "MATCH_VERSION"
+description = '''
 Adds stuff into the game based on the character of SirBlobman.
 Includes custom slime balls, blocks, weapons, armor, and mobs.
 '''
 
 [[dependencies.blobmanstuff]]
-    modId="forge"
-    mandatory=true
-    versionRange="[45,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "forge"
+mandatory = true
+versionRange = "[45,)"
+ordering = "NONE"
+side = "BOTH"
 
 [[dependencies.blobmanstuff]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.19.4,1.20)"
-    ordering="NONE"
-    side="BOTH"
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.4,1.20)"
+ordering = "NONE"
+side = "BOTH"

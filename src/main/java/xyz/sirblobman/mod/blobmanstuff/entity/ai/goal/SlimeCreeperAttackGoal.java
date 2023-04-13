@@ -40,7 +40,7 @@ public final class SlimeCreeperAttackGoal extends Goal {
             return false;
         } else if (!livingentity.isAlive()) {
             return false;
-        } else if (livingentity instanceof Player && ((Player)livingentity).getAbilities().invulnerable) {
+        } else if (livingentity instanceof Player && ((Player) livingentity).getAbilities().invulnerable) {
             return false;
         } else {
             return --this.growTiredTimer > 0;
@@ -54,7 +54,7 @@ public final class SlimeCreeperAttackGoal extends Goal {
         }
 
         this.slime.lookAt(target, 10.0F, 10.0F);
-        ((SlimeCreeperMovementController)this.slime.getMoveControl()).setDirection(this.slime.getYRot(),
+        ((SlimeCreeperMovementController) this.slime.getMoveControl()).setDirection(this.slime.getYRot(),
                 this.slime.isDealsDamage());
     }
 }

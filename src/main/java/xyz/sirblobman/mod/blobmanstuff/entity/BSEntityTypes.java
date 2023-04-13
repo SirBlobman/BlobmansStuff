@@ -38,11 +38,11 @@ public final class BSEntityTypes {
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, BlobmanStuffMod.MOD_ID);
 
     public static RegistryObject<EntityType<ItemProjectile>> ITEM_PROJECTILE = registerType(() -> {
-                Builder<ItemProjectile> builder = Builder.of(ItemProjectile::new, MobCategory.MISC);
-                builder.sized(0.25F, 0.25F);
-                builder.clientTrackingRange(4);
-                builder.updateInterval(10);
-                return builder;
+        Builder<ItemProjectile> builder = Builder.of(ItemProjectile::new, MobCategory.MISC);
+        builder.sized(0.25F, 0.25F);
+        builder.clientTrackingRange(4);
+        builder.updateInterval(10);
+        return builder;
     }, "item_projectile");
 
     public static RegistryObject<EntityType<BlueSlime>> BLUE_SLIME = registerType(() -> {

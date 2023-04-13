@@ -23,17 +23,6 @@ public final class CreeperSlimeModel extends HierarchicalModel<CreeperSlime> {
         this.root = part;
     }
 
-    @Override
-    public void setupAnim(@NotNull CreeperSlime slime, float p_103832_, float p_103833_, float p_103834_,
-                          float p_103835_, float p_103836_) {
-        // Empty Method
-    }
-
-    @Override
-    public @NotNull ModelPart root() {
-        return this.root;
-    }
-
     public static LayerDefinition createCreeperArmorLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();
         PartDefinition partDefinition = meshDefinition.getRoot();
@@ -70,5 +59,16 @@ public final class CreeperSlimeModel extends HierarchicalModel<CreeperSlime> {
         partDefinition.addOrReplaceChild("cube", cube, PartPose.ZERO);
 
         return LayerDefinition.create(meshDefinition, 64, 32);
+    }
+
+    @Override
+    public void setupAnim(@NotNull CreeperSlime slime, float p_103832_, float p_103833_, float p_103834_,
+                          float p_103835_, float p_103836_) {
+        // Empty Method
+    }
+
+    @Override
+    public @NotNull ModelPart root() {
+        return this.root;
     }
 }

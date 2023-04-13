@@ -6,9 +6,9 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import xyz.sirblobman.mod.blobmanstuff.entity.CreeperSlime;
 
 public final class SlimeCreeperMovementController extends MoveControl {
+    private final CreeperSlime slime;
     private float yRot;
     private int jumpDelay;
-    private final CreeperSlime slime;
     private boolean isAggressive;
 
     public SlimeCreeperMovementController(CreeperSlime p_i45821_1_) {

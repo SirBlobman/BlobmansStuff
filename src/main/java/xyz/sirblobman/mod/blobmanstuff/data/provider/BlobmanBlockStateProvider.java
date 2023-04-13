@@ -30,33 +30,40 @@ public class BlobmanBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
+        ResourceType textureType = new ResourceType(PackType.CLIENT_RESOURCES, ".png", "textures");
         Collection<RegistryObject<Block>> entries = BSBlocks.BLOCKS.getEntries();
-        ResourceType texture = new ResourceType(PackType.CLIENT_RESOURCES, ".png", "textures");
         for (RegistryObject<Block> entry : entries) {
-            ResourceLocation resourceLocation = entry.getId();
-            ResourceLocation textureLocation = new ResourceLocation(resourceLocation.getNamespace(),
-                    ModelProvider.BLOCK_FOLDER + "/" + resourceLocation.getPath());
-            if (!existingFileHelper.exists(textureLocation, texture)) {
+            ResourceLocation id = entry.getId();
+            String namespace = id.getNamespace();
+            String path = id.getPath();
+
+            String texturePath = (ModelProvider.BLOCK_FOLDER + "/" + path);
+            ResourceLocation textureLocation = new ResourceLocation(namespace, texturePath);
+            if (!existingFileHelper.exists(textureLocation, textureType)) {
                 continue;
             }
 
             Block block = entry.get();
             if (block instanceof BlockColoredSlime coloredSlime) {
-                BlockModelProvider models = models();
-                String name = resourceLocation.getPath();
-
-                ResourceLocation slimeBlock = new ResourceLocation("minecraft", "block/slime_block");
-                BlockModelBuilder builder = models.withExistingParent(name, slimeBlock);
-                builder.renderType("translucent");
-
-                builder.texture("particle", textureLocation);
-                builder.texture("texture", textureLocation);
-
-                simpleBlockWithItem(coloredSlime, builder);
+                registerSlimeBlock(coloredSlime, id, textureLocation);
             } else {
                 ModelFile modelFile = cubeAll(block);
                 simpleBlockWithItem(block, modelFile);
             }
         }
+    }
+
+    private void registerSlimeBlock(BlockColoredSlime block, ResourceLocation id, ResourceLocation texture) {
+        BlockModelProvider models = models();
+        String name = id.getPath();
+
+        ResourceLocation slimeBlock = new ResourceLocation("minecraft", "block/slime_block");
+        BlockModelBuilder builder = models.withExistingParent(name, slimeBlock);
+
+        builder.renderType("translucent");
+        builder.texture("particle", texture);
+        builder.texture("texture", texture);
+
+        simpleBlockWithItem(block, builder);
     }
 }

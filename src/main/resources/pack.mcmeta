@@ -1,9 +1,9 @@
 {
-    "pack": {
-        "description": {
-            "text": "Blobman's Stuff Resources"
-        },
-        "forge:server_data_pack_format": 12,
-        "pack_format": 13
-    }
+  "pack": {
+    "description": {
+      "text": "Blobman's Stuff Resources"
+    },
+    "forge:server_data_pack_format": 12,
+    "pack_format": 13
+  }
 }
