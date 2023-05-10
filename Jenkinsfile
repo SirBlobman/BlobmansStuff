@@ -3,6 +3,9 @@ pipeline {
 
     options {
         githubProjectProperty(projectUrlStr: "https://github.com/SirBlobman/BlobmansStuff")
+        folderProperties([
+            displayName: "Blobman's Stuff Mod"
+        ])
     }
 
     triggers {
